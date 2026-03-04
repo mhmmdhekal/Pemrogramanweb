@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrasi - SIA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            padding: 20px;
+        }
+
+        .register-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            width: 500px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .register-box h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .sub-title {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 5px rgba(78,115,223,0.5);
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4e73df;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: #224abe;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #4e73df;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .alert {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-box">
+        <h2>Registrasi Akun SIA</h2>
+        <div class="sub-title">Isi data dengan lengkap</div>
+
+        <div class="alert" id="errorAlert">
+            Semua field harus diisi!
+        </div>
+        
+        <div class="alert alert-success" id="successAlert" style="display: none;">
+            Registrasi berhasil! Mengalihkan ke halaman login...
+        </div>
+
+        <form id="registerForm" onsubmit="handleRegister(event)">
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="fullname" placeholder="Masukkan nama lengkap">
+                </div>
+
+                <div class="input-group">
+                    <label>NIM</label>
+                    <input type="text" id="nim" placeholder="Masukkan NIM">
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Tempat Lahir</label>
+                    <input type="text" id="tempat_lahir" placeholder="Tempat lahir">
+                </div>
+
+                <div class="input-group">
+                    <label>Tanggal Lahir</label>
+                    <input type="date" id="tanggal_lahir">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Jenis Kelamin</label>
+                <select id="jenis_kelamin">
+                    <option value="">Pilih Jenis Kelamin</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Alamat</label>
+                <input type="text" id="alamat" placeholder="Masukkan alamat lengkap">
+            </div>
+
+            <div class="input-group">
+                <label>Program Studi</label>
+                <select id="prodi">
+                    <option value="">Pilih Program Studi</option>
+                    <option value="Teknik Informatika">Teknik Informatika</option>
+                    <option value="Sistem Informasi">Sistem Informasi</option>
+                    <option value="Teknik Komputer">Teknik Komputer</option>
+                </select>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Buat username">
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Buat password">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Konfirmasi Password</label>
+                <input type="password" id="confirm_password" placeholder="Ulangi password">
+            </div>
+
+            <button type="submit" class="btn-submit">
+                Daftar
+            </button>
+
+            <div class="login-link">
+                Sudah punya akun? <a href="login.html">Login disini</a>
+            </div>
+
+            <div class="footer-text">
+                © 2026 Sistem Informasi Akademik
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            // Ambil semua nilai form
+            const fullname = document.getElementById('fullname').value.trim();
+            const nim = document.getElementById('nim').value.trim();
+            const tempat_lahir = document.getElementById('tempat_lahir').value.trim();
+            const tanggal_lahir = document.getElementById('tanggal_lahir').value;
+            const jenis_kelamin = document.getElementById('jenis_kelamin').value;
+            const alamat = document.getElementById('alamat').value.trim();
+            const prodi = document.getElementById('prodi').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const confirm_password = document.getElementById('confirm_password').value.trim();
+            
+            // Validasi form
+            if (!fullname || !nim || !tempat_lahir || !tanggal_lahir || !jenis_kelamin || !alamat || !prodi || !username || !password || !confirm_password) {
+                showError('Semua field harus diisi!');
+                return;
+            }
+            
+            // Validasi NIM (hanya angka)
+            if (!/^\d+$/.test(nim)) {
+                showError('NIM harus berupa angka!');
+                return;
+            }
+            
+            // Validasi password minimal 6 karakter
+            if (password.length < 6) {
+                showError('Password minimal 6 karakter!');
+                return;
+            }
+            
+            // Validasi konfirmasi password
+            if (password !== confirm_password) {
+                showError('Password dan konfirmasi password tidak cocok!');
+                return;
+            }
+            
+            // Ambil data users dari localStorage
+            let users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Cek apakah username sudah digunakan
+            if (users.some(u => u.username === username)) {
+                showError('Username sudah digunakan!');
+                return;
+            }
+            
+            // Cek apakah NIM sudah digunakan
+            if (users.some(u => u.nim === nim)) {
+                showError('NIM sudah terdaftar!');
+                return;
+            }
+            
+            // Buat objek user baru
+            const newUser = {
+                fullname,
+                nim,
+                tempat_lahir,
+                tanggal_lahir,
+                jenis_kelamin,
+                alamat,
+                prodi,
+                username,
+                password,
+                registeredAt: new Date().toISOString()
+            };
+            
+            // Tambahkan ke array users
+            users.push(newUser);
+            
+            // Simpan ke localStorage
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Tampilkan pesan sukses
+            const successAlert = document.getElementById('successAlert');
+            successAlert.style.display = 'block';
+            
+            // Set session untuk menampilkan pesan di login
+            sessionStorage.setItem('registered', 'success');
+            
+            // Redirect ke login setelah 2 detik
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        }
+        
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            errorAlert.textContent = message;
+            errorAlert.classList.add('show');
+            
+            setTimeout(() => {
+                errorAlert.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
